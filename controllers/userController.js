@@ -37,10 +37,18 @@ exports.get_friendRequests = async (req, res, next) => {
   res.render('friendRequests', { people: users, requests });
 };
 
-exports.acceptFriend = async (req, res, next) => {
-  const facebookId = req.body.id;
+exports.confirmRequest = async (req, res, next) => {
+  const guest = await User.findOne({ facebookId: req.body.facebookId });
+  let guestFriends = guest.friendList;
+  let guestrequestList = guest.sentRequests;
+  guestFriends = ['1056968548492628', ...guestFriends];
+  guestrequestList = guestrequestList.filter((guest) => guest !== '1056968548492628');
+  const host = await User.find({ facebookId: '1056968548492628' });
 };
 
+exports.cancelRequest = async (req, res, next) => {
+
+};
 exports.addFriend = async (req, res, next) => {
   const { facebookId } = req.body;
   const response = await User.findOne({ facebookId });
@@ -54,8 +62,7 @@ exports.addFriend = async (req, res, next) => {
   await User.findOneAndUpdate({ facebookId: '1056968548492628' }, {
     sentRequests: response1.sentRequests,
   });
-  console.log('hello', r);
-  res.render('index');
+  res.json({ move: true });
 };
 
 exports.get_timeline = (req, res, next) => {

@@ -20,11 +20,11 @@
                 <h3>Friend Requests (<%= requests.length %>)</h3>
                 <% requests.forEach((request) => { %>
                     <div class="person-card">
-                        <img src="<%=request.profile_pic%>" alt="">
+                        <img src="<%=request.profile_pic%>" alt="profile">
                         <p><%= request.name %></p>
-                        <button class="btn btn-success mb-1">Confirm</button>
-                        <button class="btn btn-danger mb-1">Decline</button>
-                        <button class="btn btn-light">View profile</button>
+                        <button class="btn btn-success mb-1" onclick="confirmRequest('<%= request.facebookId %>')">Confirm</button>
+                        <button class="btn btn-danger mb-1" onclick="cancelRequest('<%= request.facebookId %>')">Decline</button>
+                        <a href="/user/<%= request.facebookId %> "><button class="btn btn-light">View profile</button></a>
                     </div>
                 <% }) %> 
             </div>

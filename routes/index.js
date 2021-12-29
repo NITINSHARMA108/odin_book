@@ -18,7 +18,9 @@ router.get('/friendList', userController.get_friendList); // d
 
 router.get('/friendRequests', userController.get_friendRequests); // d
 
-router.post('/acceptFriend', userController.acceptFriend);
+router.post('/confirmRequest', userController.confirmRequest);
+
+router.post('/cancelRequest', userController.cancelRequest);
 
 router.post('/addFriend', userController.addFriend);
 
