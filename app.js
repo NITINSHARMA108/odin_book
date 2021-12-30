@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const path = require('path');
-require('dotenv').config();
+const session = require('express-session');
 const passport = require('passport');
+require('dotenv').config();
 
 const app = express();
 
@@ -19,9 +20,23 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
+app.use(express.urlencoded({
+  extended: true,
+}));
 require('./config/passport_facebook')(passport);
 
+app.use(session({
+  secret: process.env.SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+  },
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(routes);
-
+app.use((req, res, next) => {
+  console.log('user', req.user);
+});
 app.listen(5000, () => console.log('listening to port 5000'));

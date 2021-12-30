@@ -1,3 +1,5 @@
+<h3>People you may now</h3>
+<% if(people.length > 0){ %> 
 <% people.forEach((person)=>{ %>
     <div class="person d-flex">
         <div class="flex-2">
@@ -11,3 +13,6 @@
     </div>
     
 <% }) %> 
+<% }else{ %>
+    <p class="text-center">No User found</p>
+    <% } %>  

@@ -1,15 +1,17 @@
 body{
     margin:0;
     height:100vh;
-    /*overflow-y :hidden;*/
     background-color: black;
     color: white;
+    overflow-x:hidden
 }
 .container{
     height:100%;
 }
-.row{
-    height:100%;
+
+.container-fluid{
+    margin:0;
+    padding:0
 }
 
 i{
@@ -25,11 +27,17 @@ float:right;
 }
 .sidenav{
     border-right: 5px solid grey;
+    height: 90vh;
+    overflow-y: auto;
 }
 .person{
+    width:100%;
     border-bottom: 5px solid grey;
     padding-top:10px;
     padding-bottom:10px;
+    padding-left: 10%;
+    margin: auto;
+    
 }
 .profile-image{
     width: 200px;
@@ -44,4 +52,21 @@ float:right;
 }
 .person-card > * {
     width:100%;
+}
+
+.post{
+    width:60%;
+    margin:auto;
+    border: 2px solid grey;
+    border-radius: 5px;
+    margin-top:10px;
+    padding: 10px;
+}
+.header{
+    display:flex;
+    justify-content:center;
+    margin:0;
+}
+.post-details{
+    overflow-x:hidden;
 }

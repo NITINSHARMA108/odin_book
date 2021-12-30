@@ -13,11 +13,24 @@ module.exports = (passport) => {
       ((accessToken, refreshToken, profile, done) => {
         console.log(profile);
         const profileUrl = profile.photos[0].value;
-        User.create(
-          { facebookId: profile.id, name: profile.displayName, profile_pic: profileUrl },
+        User.findOne(
+          { facebookId: profile.id },
           (err, user) => {
-            console.log(user);
-            done(err, user);
+            if (err) {
+              return done(err);
+            }
+            if (user) {
+              console.log('user already exists');
+              return done(null, user);
+            }
+
+            User.create(
+              { facebookId: profile.id, name: profile.displayName, profile_pic: profileUrl },
+              (error, newuser) => {
+                console.log(newuser);
+                return done(err, newuser);
+              },
+            );
           },
         );
       }),
@@ -25,5 +38,10 @@ module.exports = (passport) => {
   );
   passport.serializeUser((user, cb) => {
     cb(null, user);
+  });
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      done(err, user);
+    });
   });
 };

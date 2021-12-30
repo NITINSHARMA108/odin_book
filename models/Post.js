@@ -10,21 +10,24 @@ const Post = new Schema({
     type: String,
     required: true,
   },
-  caption: {
-    type: String,
-  },
-  image: {
+  user_pic: {
     type: String,
   },
   date: {
     type: Date,
     required: true,
   },
-  likeList: {
-    type: Array,
+  content: {
+    type: String,
+    required: true,
   },
-  comment: {
+  likes: {
     type: Array,
+    default: [],
+  },
+  comments: {
+    type: Array,
+    default: [],
   },
 });
 

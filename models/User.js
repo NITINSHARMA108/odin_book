@@ -26,6 +26,10 @@ const User = new Schema({
     type: Array,
     default: [],
   },
+  likeList: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model('User', User);

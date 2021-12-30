@@ -5,16 +5,14 @@ const passport = require('passport');
 const userController = require('../controllers/userController');
 const postController = require('../controllers/postController');
 
-router.get('/', userController.get_timeline);
+// router.get('/', userController.get_timeline);
 router.post('/signup', userController.post_signup);
 
 router.get('/signin', userController.post_signin);
 
 // router.post('/login', userController.post_login);
 
-router.get('/timeline', postController.get_posts);
-
-router.get('/friendList', userController.get_friendList); // d
+router.get('/', postController.get_posts);
 
 router.get('/friendRequests', userController.get_friendRequests); // d
 
@@ -27,6 +25,8 @@ router.post('/addFriend', userController.addFriend);
 router.get('/profile', userController.get_profile); // done
 
 router.get('/createpost', postController.get_createpost);
+
+router.post('/createPost', postController.post_createpost);
 
 router.get('/login', passport.authenticate('facebook'));
 router.get(
@@ -46,5 +46,13 @@ router.get(
 router.get('/user/:id', userController.get_user);
 
 router.get('/friends', userController.get_friends);
+
+router.get('/signout', userController.signout);
+
+router.post('/unfriendUser', userController.unfriendUser);
+
+router.post('/likePost', postController.likePost);
+
+router.get('/post/:id', postController.get_post);
 
 module.exports = router;
