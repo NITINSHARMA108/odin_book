@@ -10,7 +10,7 @@ const app = express();
 
 const routes = require('./routes/index');
 
-const mongoDburl = process.env.connection;
+const mongoDburl = process.env.CONNECTION;
 
 mongoose.connect(mongoDburl, { useUnifiedTopology: true, useNewUrlParser: true })
   .catch((err) => console.log(err));
