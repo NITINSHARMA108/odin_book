@@ -4,19 +4,16 @@ const { Schema } = mongoose;
 const User = new Schema({
   name: {
     type: String,
-
   },
   profile_pic: {
     type: String,
   },
   friendList: {
     type: Array,
-
     default: [],
   },
   friendRequests: {
     type: Array,
-
     default: [],
   },
   facebookId: {

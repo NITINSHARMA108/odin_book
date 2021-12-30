@@ -53,6 +53,8 @@ router.post('/unfriendUser', userController.unfriendUser);
 
 router.post('/likePost', postController.likePost);
 
+router.post('/dislikePost', postController.dislikePost);
+
 router.get('/post/:id', postController.get_post);
 
 router.post('/post/:id/postComment', postController.postComment);

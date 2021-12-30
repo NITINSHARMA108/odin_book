@@ -20,7 +20,7 @@ exports.get_posts = async (req, res, next) => {
     const response = await Post.find({ user_id: { $in: friends } });
     const people = await getpeople(req.user.facebookId);
     console.log(response);
-    res.render('index', { posts: response, people });
+    res.render('index', { posts: response, people, user: req.user });
   } else {
     res.redirect('/signin');
   }
@@ -29,7 +29,7 @@ exports.get_posts = async (req, res, next) => {
 exports.get_createpost = async (req, res, next) => {
   if (req.isAuthenticated()) {
     const people = await getpeople(req.user.facebookId);
-    res.render('createPost', { people });
+    res.render('createPost', { people, user: req.user });
   } else {
     res.redirect('/signin');
   }
@@ -58,6 +58,24 @@ exports.likePost = async (req, res, next) => {
       const response2 = await User.findByIdAndUpdate(
         req.user.facebookId,
         { $push: { likeList: id } },
+      );
+      res.json({ move: true });
+    } catch (err) {
+      res.json({ move: false });
+    }
+  } else {
+    res.redirect('/signin');
+  }
+};
+
+exports.dislikePost = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    try {
+      const { id } = req.body;
+      const response1 = await Post.findByIdAndUpdate(id, { $pull: { likes: req.user.facebookId } });
+      const response2 = await User.findByIdAndUpdate(
+        req.user.facebookId,
+        { $pull: { likeList: id } },
       );
       res.json({ move: true });
     } catch (err) {

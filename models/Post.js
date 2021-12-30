@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DateTime } = require('luxon');
 
 const { Schema } = mongoose;
 const Post = new Schema({
@@ -16,6 +17,7 @@ const Post = new Schema({
   date: {
     type: Date,
     required: true,
+    default: new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
   },
   content: {
     type: String,
@@ -29,6 +31,13 @@ const Post = new Schema({
     type: Array,
     default: [],
   },
+});
+
+Post.virtual('formal_date').get(function () {
+  const formalDate = DateTime.fromJSDate(this.date).toLocaleString(
+    DateTime.DATETIME_MED,
+  );
+  return formalDate;
 });
 
 module.exports = mongoose.model('Post', Post);

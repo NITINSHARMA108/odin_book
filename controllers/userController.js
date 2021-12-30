@@ -50,7 +50,7 @@ exports.get_friendRequests = async (req, res, next) => {
 
     const requests = await User.find({ facebookId: { $in: friendRequests } });
     const people = await getpeople(req.user.facebookId);
-    res.render('friendRequests', { people, requests });
+    res.render('friendRequests', { people, requests, user: req.user });
   } else {
     res.redirect('/signin');
   }
@@ -142,7 +142,7 @@ exports.get_friends = async (req, res, next) => {
     const { friendList } = response;
     const friends = await User.find({ facebookId: { $in: friendList } });
     const people = await getpeople(req.user.facebookId);
-    res.render('friends', { friends, people });
+    res.render('friends', { friends, people, user: req.user });
   } else {
     res.redirect('/signin');
   }

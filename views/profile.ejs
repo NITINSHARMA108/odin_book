@@ -17,37 +17,44 @@
                 <%- include('./sidenav.ejs') %>
             </div>
             <div class="col-md">
-                <div class="row">
-                    <div class="col-4 m-auto d-flex flex-column align-items-center">
+                <div class="row user-info">
+                    
                         
-                        <img  class="profile-image" class="" src="<%= user.profile_pic %>" alt="profile-pic">
-                        <p ><%= user.name %></p>
-                        <p> Friends <%= user.friendList.length %></p> 
-                    </div>
+                        <img  class="profile-image" src="<%= user.profile_pic %>" alt="profile-pic">
+                        <div>
+                            <p ><%= user.name %></p>
+                            <p> Friends <%= user.friendList.length %></p> 
+                        </div>
+                    
                 </div>
                 <h3 class="text-center">Posts</h3>
                 <div class="row">
                     
                     <% posts.forEach((post)=>{ %>
                         <div class="post">
-                            <div class="row user-details">
-                                <div class="col-2">
-                                    <img class="profile-pic" src='<%= post.user_pic%>' alt="profile">
+                            <div class="row user-details mt-1">
+                                <div class="col-2 ">
+                                    <img class="profile-pic" src='<%= post.user_pic %>'  alt="profile">
                                 </div>
-                                <div class="col text-light">
-                                    <%= post.user_name %> 
-                                    <a href="/post/<%= post._id %> "><button class="btn btn-primary">View Post</button></a>
+                                <div class="col text-light d-flex name">
+                                    <p><strong><%= post.user_name %> </p></strong>
+                                    <a href="/post/<%=post._id%>"><button class="btn btn-primary">View post</button></a>
                                 </div>
                             </div>
-                            <div class="row post-details" >
-                                <p> <%= post.content %> </p>
-                         </div>
-                         <div class="row post-details">
-                             <p><i class="fas fa-thumbs-up" onclick="likePost('<%= post._id %>')"></i> <%= post.likes.length %> </p> 
-                             <p><i class="fas fa-comment"></i> <%= post.comments.length %> </p> 
-                             
-                         </div>
-                            
+                            <div class="post-details" >
+                                   <p> <%= post.content %> </p>
+                            </div>
+                            <div class="post-actions">
+                                
+                                <p>
+                                    <% if(post.likes.indexOf(user.facebookId) === -1){ %>
+                                        <i class="fas fa-thumbs-up" onclick="likePost('<%= post._id %>')"></i>
+                                        <% }else{%>
+                                            <i class="fas fa-thumbs-up text-primary" onclick="dislikePost('<%= post._id %>')"></i>
+                                            <% } %>  <%= post.likes.length %> </p> 
+                                <p><i class="fas fa-comment"></i> <%= post.comments.length %> </p> 
+                                
+                            </div>
                             
                         </div>
                     <% }) %> 
