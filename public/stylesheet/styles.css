@@ -29,6 +29,8 @@ margin-left:20px;
     border-right: 5px solid grey;
     height: 90vh;
     overflow-y: auto;
+    padding:0px;
+    padding-bottom: 20px;
 }
 .person{
     width:100%;
@@ -38,6 +40,11 @@ margin-left:20px;
     padding-left: 10%;
     margin: auto;
     
+}
+.main{
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
 }
 .profile-image{
     width: 200px;
@@ -87,10 +94,32 @@ margin-left:20px;
 .request-numbers{
     background-color:red;
     color:white;
+    text-align:center;
     padding: 5px;
     border-radius:50%;
     margin-left: -25%;
+    margin-top:-50px;
 }
 .user-info{
     width:60%;
+    margin:auto;
+    display:flex;
+    
+}
+.navbar a{
+    text-decoration: none;
+}
+.user-details{
+    overflow-x: hidden
+}
+.friend-card{
+    display:flex;
+    flex-wrap:wrap;
+}
+.info-text{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    flex:1;
+    margin-left:16px;
 }

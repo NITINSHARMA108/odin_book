@@ -1,18 +1,27 @@
-<h3>People you may now</h3>
-<% if(people.length > 0){ %> 
-<% people.forEach((person)=>{ %>
-    <div class="person d-flex">
-        <div class="flex-2">
-            <img class="profile-pic" src="<%= person.profile_pic %> " alt="profile-pic">
-        </div>
-        <div class="ml-3">
-            <p><%= person.name %></p>
-            <button class="btn btn-primary" onclick="sendrequest('<%= person.facebookId %>')">Add Friend</button>
-            <a href="/user/<%= person.facebookId %> "><button class="btn btn-light">View Profile</button></a>
-        </div>
-    </div>
-    
-<% }) %> 
-<% }else{ %>
-    <p class="text-center">No User found</p>
-    <% } %>  
+<h3 class="text-center">People you may now</h3>
+<% if(people.length > 0){ %> <% people.forEach((person)=>{ %>
+<div class="person d-flex">
+  <div>
+    <img
+      class="profile-pic"
+      src="<%= person.profile_pic %> "
+      alt="profile-pic"
+    />
+  </div>
+  <div class="ml-3">
+    <p><%= person.name %></p>
+    <button
+      class="btn btn-primary"
+      onclick="sendrequest('<%= person.facebookId %>')"
+    >
+      Add Friend
+    </button>
+    <a href="/user/<%= person.facebookId %> "
+      ><button class="btn btn-light">View Profile</button></a
+    >
+  </div>
+</div>
+
+<% }) %> <% }else{ %>
+<p class="text-center">No User found</p>
+<% } %>

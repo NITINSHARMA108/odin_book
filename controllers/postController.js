@@ -17,7 +17,9 @@ exports.get_posts = async (req, res, next) => {
     const user = await User.findOne({ facebookId: req.user.facebookId });
     let friends = user.friendList;
     friends = [req.user.facebookId, ...friends];
-    const response = await Post.find({ user_id: { $in: friends } });
+    const response = await Post.find({ user_id: { $in: friends } }).sort({
+      date: -1,
+    });
     const people = await getpeople(req.user.facebookId);
     console.log(response);
     res.render('index', { posts: response, people, user: req.user });
@@ -54,11 +56,12 @@ exports.likePost = async (req, res, next) => {
   if (req.isAuthenticated()) {
     try {
       const { id } = req.body;
-      const response1 = await Post.findByIdAndUpdate(id, { $push: { likes: req.user.facebookId } });
-      const response2 = await User.findByIdAndUpdate(
-        req.user.facebookId,
-        { $push: { likeList: id } },
-      );
+      const response1 = await Post.findByIdAndUpdate(id, {
+        $push: { likes: req.user.facebookId },
+      });
+      const response2 = await User.findByIdAndUpdate(req.user.facebookId, {
+        $push: { likeList: id },
+      });
       res.json({ move: true });
     } catch (err) {
       res.json({ move: false });
@@ -72,11 +75,12 @@ exports.dislikePost = async (req, res, next) => {
   if (req.isAuthenticated()) {
     try {
       const { id } = req.body;
-      const response1 = await Post.findByIdAndUpdate(id, { $pull: { likes: req.user.facebookId } });
-      const response2 = await User.findByIdAndUpdate(
-        req.user.facebookId,
-        { $pull: { likeList: id } },
-      );
+      const response1 = await Post.findByIdAndUpdate(id, {
+        $pull: { likes: req.user.facebookId },
+      });
+      const response2 = await User.findByIdAndUpdate(req.user.facebookId, {
+        $pull: { likeList: id },
+      });
       res.json({ move: true });
     } catch (err) {
       res.json({ move: false });
@@ -110,7 +114,7 @@ exports.get_post = async (req, res, next) => {
     try {
       const post = await Post.findById(req.params.id);
       const people = await getpeople(req.user.facebookId);
-      res.render('Post', { post, people });
+      res.render('Post', { post, people, user: req.user });
     } catch (err) {
       res.redirect('/');
     }

@@ -16,16 +16,16 @@
             <div class="col-md-4 sidenav">
                 <%- include('./sidenav.ejs') %>
             </div>
-            <div class="col-md">
-                <div class="row user-info">
+            <div class="col-md main">
+                <div class="row mt-3">
                     
-                        
+                    <div class="user-info">
                         <img  class="profile-image" src="<%= user.profile_pic %>" alt="profile-pic">
-                        <div>
-                            <p ><%= user.name %></p>
+                        <div class="info-text">
+                            <p class="font-weight-bold"><%= user.name %></p>
                             <p> Friends <%= user.friendList.length %></p> 
                         </div>
-                    
+                    </div>
                 </div>
                 <h3 class="text-center">Posts</h3>
                 <div class="row">
@@ -43,6 +43,7 @@
                             </div>
                             <div class="post-details" >
                                    <p> <%= post.content %> </p>
+                                   <p> Date: <%= post.formal_date %> </p>
                             </div>
                             <div class="post-actions">
                                 

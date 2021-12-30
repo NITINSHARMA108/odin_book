@@ -6,7 +6,6 @@ const userController = require('../controllers/userController');
 const postController = require('../controllers/postController');
 
 // router.get('/', userController.get_timeline);
-router.post('/signup', userController.post_signup);
 
 router.get('/signin', userController.post_signin);
 
@@ -29,10 +28,7 @@ router.get('/createpost', postController.get_createpost);
 router.post('/createPost', postController.post_createpost);
 
 router.get('/login', passport.authenticate('facebook'));
-router.get(
-  '/auth/facebook',
-  passport.authenticate('facebook'),
-);
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get(
   '/auth/facebook/secrets',
