@@ -12,7 +12,8 @@ const routes = require('./routes/index');
 
 const mongoDburl = process.env.connection;
 
-mongoose.connect(mongoDburl, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(mongoDburl, { useUnifiedTopology: true, useNewUrlParser: true })
+  .catch((err) => console.log(err));
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 

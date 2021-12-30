@@ -36,15 +36,15 @@
                                 </div>
                                 <div class="col text-light">
                                     <%= post.user_name %> 
-                                    <button class="btn btn-primary">View Post</button>
+                                    <a href="/post/<%= post._id %> "><button class="btn btn-primary">View Post</button></a>
                                 </div>
                             </div>
                             <div class="row post-details" >
                                 <p> <%= post.content %> </p>
                          </div>
                          <div class="row post-details">
-                             <p><i class="fas fa-thumbs-up" onclick="likePost('<%= post._id %>')"></i> <%= post.likes %> </p> 
-                             <p><i class="fas fa-comment"></i> <%= post.comments %> </p> 
+                             <p><i class="fas fa-thumbs-up" onclick="likePost('<%= post._id %>')"></i> <%= post.likes.length %> </p> 
+                             <p><i class="fas fa-comment"></i> <%= post.comments.length %> </p> 
                              
                          </div>
                             

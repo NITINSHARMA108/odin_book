@@ -18,12 +18,12 @@ i{
 font-size:1.5em;
 margin-left:20px;
 }
-.navbar-collapse{
-float:right;
-}
+
 .profile-pic{
+    width:50px;
+    height:50px;
     border-radius:50%;
-    height:80px;
+    
 }
 .sidenav{
     border-right: 5px solid grey;
@@ -69,4 +69,11 @@ float:right;
 }
 .post-details{
     overflow-x:hidden;
+}
+.comment{
+    border: 1px solid grey;
+    padding:5px;
+    width:50%;
+    border-radius:5px;
+    margin-top:10px;
 }

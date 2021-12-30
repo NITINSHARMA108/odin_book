@@ -28,6 +28,7 @@
                             </div>
                             <div class="col text-light">
                                 <p><%= post.user_name %> </p>
+                                <button class="btn btn-primary">View profile</button>
                             </div>
                         </div>
                         <div class="row post-details" >
@@ -35,8 +36,8 @@
                         </div>
                         <div class="row post-details">
                             
-                            <p><i class="fas fa-thumbs-up"></i> <%= post.likes %> </p> 
-                            <p><i class="fas fa-comment"></i> <%= post.comments %> </p> 
+                            <p><i class="fas fa-thumbs-up"></i> <%= post.likes.length %> </p> 
+                            <p><i class="fas fa-comment"></i> <%= post.comments.length %> </p> 
                             
                         </div>
                         

@@ -13,11 +13,12 @@
     <%- include('./navbar.ejs') %>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 sidenav">
                 <%- include('./sidenav.ejs')%>
             </div>
             <div class="col-md">
                 <div class="row user-details">
+                    <img src="<%= post.user_pic %>" class="profile-pic">
                     <%= post.user_name %> 
                 </div>
                 <div class="row post-details">
@@ -27,6 +28,16 @@
                     <p>Likes <%= post.likes.length %> </p>
                     <p> Comments <%= post.comments.length %> </p>
                 </div>
+                <form class="w-50 d-flex" method="POST" action="/post/<%= post._id %>/postComment">
+                    <input type="text" name="comment" class="form-control">
+                    <button class="btn btn-success ml-3">Comment</button>
+                </form>
+                <% post.comments.forEach((comment)=>{ %>
+                    <div class="comment">
+                        <p class="font-weight-bold"> <%= comment.name %> </p>
+                        <p><%= comment.comment %> </p>
+                    </div>
+                <% }) %> 
             </div>
         </div>
         

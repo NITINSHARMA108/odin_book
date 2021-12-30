@@ -55,4 +55,6 @@ router.post('/likePost', postController.likePost);
 
 router.get('/post/:id', postController.get_post);
 
+router.post('/post/:id/postComment', postController.postComment);
+
 module.exports = router;
