@@ -40,4 +40,5 @@ app.use(routes);
 app.use((req, res, next) => {
   console.log('user', req.user);
 });
-app.listen(5000, () => console.log('listening to port 5000'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log('listening to port 5000'));
