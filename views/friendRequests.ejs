@@ -31,7 +31,7 @@
             <% requests.forEach((request) => { %>
             <div class="person-card">
               <img src="<%=request.profile_pic%>" alt="profile" />
-              <p><%= request.name %></p>
+              <p class="text-center font-weight-bold"><%= request.name %></p>
               <button
                 class="btn btn-success mb-1"
                 onclick="confirmRequest('<%= request.facebookId %>')"

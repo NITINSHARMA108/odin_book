@@ -31,7 +31,7 @@
             <% friends.forEach((friend)=>{ %>
             <div class="person-card">
               <img src="<%= friend.profile_pic %>" />
-              <p><%= friend.name %></p>
+              <p class="text-center font-weight-bold"><%= friend.name %></p>
               <button
                 class="btn btn-primary mb-1"
                 onclick="unfriendUser('<%= friend.facebookId %>')"

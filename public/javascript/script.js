@@ -1,5 +1,4 @@
 async function sendrequest(id) {
-  console.log(id);
   const response = await fetch('/addFriend', {
     method: 'POST',
     headers: {
@@ -9,7 +8,6 @@ async function sendrequest(id) {
   });
   const result = await response.json();
   if (result.move) {
-    console.log('hello');
     window.location.href = '/';
   } else {
     window.location.href = '/';
@@ -17,7 +15,6 @@ async function sendrequest(id) {
 }
 
 async function confirmRequest(id) {
-  console.log(id);
   const response = await fetch('/confirmRequest', {
     method: 'POST',
     headers: {
@@ -34,7 +31,6 @@ async function confirmRequest(id) {
 }
 
 async function cancelRequest(id) {
-  console.log(id);
   const response = await fetch('/cancelRequest', {
     method: 'POST',
     headers: {
@@ -51,7 +47,6 @@ async function cancelRequest(id) {
 }
 
 async function unfriendUser(id) {
-  console.log(id);
   const response = await fetch('/unfriendUser', {
     method: 'POST',
     headers: {

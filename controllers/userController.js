@@ -121,25 +121,23 @@ exports.cancelRequest = async (req, res, next) => {
 
 exports.addFriend = async (req, res, next) => {
   if (req.isAuthenticated()) {
-    const { facebookId } = req.body;
-    const guest = await User.findOne({ facebookId });
-    let requestList = guest.friendRequests;
-    requestList = [req.user.facebookId, ...requestList];
-    const host = await User.findOne({ facebookId: req.user.facebookId });
-    const hostsentRequests = host.sentRequests;
-    const r = await User.findOneAndUpdate(
-      { facebookId },
+    const response1 = await User.findOneAndUpdate(
+      { facebookId: req.body.facebookId },
       {
-        friendRequests: requestList,
+        $push: { friendRequests: req.user.facebookId },
       },
     );
     const response2 = await User.findOneAndUpdate(
       { facebookId: req.user.facebookId },
       {
-        sentRequests: hostsentRequests,
+        $push: { sentRequests: req.body.facebookId },
       },
     );
-    res.json({ move: true });
+    if (response1 && response2) {
+      res.json({ move: true });
+    } else {
+      res.json({ move: false });
+    }
   } else {
     res.redirect('/signin');
   }
