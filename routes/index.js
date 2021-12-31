@@ -13,7 +13,7 @@ router.get('/signin', userController.post_signin);
 
 router.get('/', postController.get_posts);
 
-router.get('/friendRequests', userController.get_friendRequests); // d
+router.get('/friendRequests', userController.get_friendRequests);
 
 router.post('/confirmRequest', userController.confirmRequest);
 
@@ -21,21 +21,21 @@ router.post('/cancelRequest', userController.cancelRequest);
 
 router.post('/addFriend', userController.addFriend);
 
-router.get('/profile', userController.get_profile); // done
+router.get('/profile', userController.get_profile);
 
 router.get('/createpost', postController.get_createpost);
 
 router.post('/createPost', postController.post_createpost);
 
 router.get('/login', passport.authenticate('facebook'));
+
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get(
   '/auth/facebook/secrets',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('hello');
-    res.redirect('/friendRequests');
+    res.redirect('/');
   },
 );
 

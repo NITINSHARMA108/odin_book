@@ -25,7 +25,6 @@ exports.get_profile = async (req, res, next) => {
       date: -1,
     });
     const people = await getpeople(req.user.facebookId);
-    console.log('people', people);
     res.render('profile', { user: req.user, posts, people });
   } else {
     res.redirect('/signin');
@@ -46,109 +45,116 @@ exports.get_friendRequests = async (req, res, next) => {
 };
 
 exports.confirmRequest = async (req, res, next) => {
-  try {
-    const guest = await User.findOne({ facebookId: req.body.facebookId });
-    console.log(guest);
-    let guestFriends = guest.friendList;
-    let guestrequestList = guest.sentRequests;
-    guestFriends = [req.user.facebookId, ...guestFriends];
-    guestrequestList = guestrequestList.filter(
-      (g) => g !== req.user.facebookId,
-    );
-    const response1 = await User.findOneAndUpdate(
-      { facebookId: req.body.facebookId },
-      {
-        friendList: guestFriends,
-        sentRequests: guestrequestList,
-      },
-    );
-    console.log('inside confirm', req.user);
-    const host = await User.findOne({ facebookId: req.user.facebookId });
-    let hostFriends = host.friendList;
-    console.log(host);
-    let hostFriendRequests = host.friendRequests;
-    hostFriends = [req.body.facebookId, ...hostFriends];
-    hostFriendRequests = hostFriendRequests.filter(
-      (h) => h !== req.body.facebookId,
-    );
-    const response2 = await User.findOneAndUpdate(
-      { facebookId: req.user.facebookId },
-      {
-        friendList: hostFriends,
-        friendRequests: hostFriendRequests,
-      },
-    );
-    console.log(response1, response2);
-    res.json({ move: true });
-  } catch (err) {
-    console.log(err);
-    res.json({ move: false });
+  if (req.isAuthenticated()) {
+    try {
+      const guest = await User.findOne({ facebookId: req.body.facebookId });
+      let guestFriends = guest.friendList;
+      let guestrequestList = guest.sentRequests;
+      guestFriends = [req.user.facebookId, ...guestFriends];
+      guestrequestList = guestrequestList.filter(
+        (g) => g !== req.user.facebookId,
+      );
+      const response1 = await User.findOneAndUpdate(
+        { facebookId: req.body.facebookId },
+        {
+          friendList: guestFriends,
+          sentRequests: guestrequestList,
+        },
+      );
+      const host = await User.findOne({ facebookId: req.user.facebookId });
+      let hostFriends = host.friendList;
+      let hostFriendRequests = host.friendRequests;
+      hostFriends = [req.body.facebookId, ...hostFriends];
+      hostFriendRequests = hostFriendRequests.filter(
+        (h) => h !== req.body.facebookId,
+      );
+      const response2 = await User.findOneAndUpdate(
+        { facebookId: req.user.facebookId },
+        {
+          friendList: hostFriends,
+          friendRequests: hostFriendRequests,
+        },
+      );
+      res.json({ move: true });
+    } catch (err) {
+      res.json({ move: false });
+    }
+  } else {
+    res.redirect('/signin');
   }
 };
 
 exports.cancelRequest = async (req, res, next) => {
-  try {
-    const guest = await User.findOne({ facebookId: req.body.facebookId });
-    let guestrequestList = guest.sentRequests;
-    guestrequestList = guestrequestList.filter(
-      (g) => g !== req.user.facebookId,
-    );
-    console.log(guestrequestList);
-    const host = await User.findOne({ facebookId: req.user.facebookId });
-    let hostFriendRequests = host.friendRequests;
+  if (req.isAuthenticated()) {
+    try {
+      const guest = await User.findOne({ facebookId: req.body.facebookId });
+      let guestrequestList = guest.sentRequests;
+      guestrequestList = guestrequestList.filter(
+        (g) => g !== req.user.facebookId,
+      );
+      const host = await User.findOne({ facebookId: req.user.facebookId });
+      let hostFriendRequests = host.friendRequests;
 
-    hostFriendRequests = hostFriendRequests.filter(
-      (h) => h !== req.body.facebookId,
-    );
-    console.log(hostFriendRequests);
-    const response1 = await User.findOneAndUpdate(
-      { facebookId: req.body.facebookId },
+      hostFriendRequests = hostFriendRequests.filter(
+        (h) => h !== req.body.facebookId,
+      );
+      const response1 = await User.findOneAndUpdate(
+        { facebookId: req.body.facebookId },
+        {
+          sentRequests: guestrequestList,
+        },
+      );
+      const response2 = await User.findOneAndUpdate(
+        { facebookId: req.user.facebookId },
+        {
+          friendRequests: hostFriendRequests,
+        },
+      );
+      res.json({ move: true });
+    } catch (err) {
+      res.json({ move: false });
+    }
+  } else {
+    res.redirect('/signin');
+  }
+};
+
+exports.addFriend = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const { facebookId } = req.body;
+    const guest = await User.findOne({ facebookId });
+    let requestList = guest.friendRequests;
+    requestList = [req.user.facebookId, ...requestList];
+    const host = await User.findOne({ facebookId: req.user.facebookId });
+    const hostsentRequests = host.sentRequests;
+    const r = await User.findOneAndUpdate(
+      { facebookId },
       {
-        sentRequests: guestrequestList,
+        friendRequests: requestList,
       },
     );
     const response2 = await User.findOneAndUpdate(
       { facebookId: req.user.facebookId },
       {
-        friendRequests: hostFriendRequests,
+        sentRequests: hostsentRequests,
       },
     );
     res.json({ move: true });
-  } catch (err) {
-    console.log(err);
-    res.json({ move: false });
+  } else {
+    res.redirect('/signin');
   }
 };
 
-exports.addFriend = async (req, res, next) => {
-  const { facebookId } = req.body;
-  const guest = await User.findOne({ facebookId });
-  let requestList = guest.friendRequests;
-  requestList = [req.user.facebookId, ...requestList];
-  const host = await User.findOne({ facebookId: req.user.facebookId });
-  const hostsentRequests = host.sentRequests;
-  const r = await User.findOneAndUpdate(
-    { facebookId },
-    {
-      friendRequests: requestList,
-    },
-  );
-  const response2 = await User.findOneAndUpdate(
-    { facebookId: req.user.facebookId },
-    {
-      sentRequests: hostsentRequests,
-    },
-  );
-  console.log(r, response2);
-  res.json({ move: true });
-};
-
 exports.get_user = async (req, res, next) => {
-  const response = await User.findOne({ facebookId: req.params.id });
-  const user = await User.findOne({ facebookId: '1056968548492628' });
-  const { friendList } = user;
-  const people = await User.find({ facebookId: { $nin: friendList } });
-  res.render('profile', { people, user: response });
+  if (req.isAuthenticated()) {
+    const response = await User.findOne({ facebookId: req.params.id });
+    const user = await User.findOne({ facebookId: '1056968548492628' });
+    const { friendList } = user;
+    const people = await User.find({ facebookId: { $nin: friendList } });
+    res.render('profile', { people, user: response });
+  } else {
+    res.redirect('/signin');
+  }
 };
 
 exports.get_friends = async (req, res, next) => {
@@ -164,31 +170,33 @@ exports.get_friends = async (req, res, next) => {
 };
 
 exports.unfriendUser = async (req, res, next) => {
-  try {
-    console.log(req.body);
-    const host = await User.findOne({ facebookId: req.user.facebookId });
-    const guest = await User.findOne({ facebookId: req.body.facebookId });
-    console.log('guest', guest);
-    let guestfriendList = guest.friendList;
-    guestfriendList = guestfriendList.filter((g) => g !== req.user.facebookId);
-    let hostfriendList = host.friendList;
-    hostfriendList = hostfriendList.filter((h) => h !== req.body.facebookId);
-    const response1 = await User.findOneAndUpdate(
-      { facebookId: req.body.facebookId },
-      {
-        friendList: guestfriendList,
-      },
-    );
-    const response2 = await User.findOneAndUpdate(
-      { facebookId: req.user.facebookId },
-      {
-        friendList: hostfriendList,
-      },
-    );
-    res.json({ move: true });
-  } catch (err) {
-    console.log(err);
-    res.json({ move: false });
+  if (req.isAuthenticated()) {
+    try {
+      const host = await User.findOne({ facebookId: req.user.facebookId });
+      const guest = await User.findOne({ facebookId: req.body.facebookId });
+
+      let guestfriendList = guest.friendList;
+      guestfriendList = guestfriendList.filter((g) => g !== req.user.facebookId);
+      let hostfriendList = host.friendList;
+      hostfriendList = hostfriendList.filter((h) => h !== req.body.facebookId);
+      const response1 = await User.findOneAndUpdate(
+        { facebookId: req.body.facebookId },
+        {
+          friendList: guestfriendList,
+        },
+      );
+      const response2 = await User.findOneAndUpdate(
+        { facebookId: req.user.facebookId },
+        {
+          friendList: hostfriendList,
+        },
+      );
+      res.json({ move: true });
+    } catch (err) {
+      res.json({ move: false });
+    }
+  } else {
+    res.redirect('/signin');
   }
 };
 exports.signout = (req, res, next) => {

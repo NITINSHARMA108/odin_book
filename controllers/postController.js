@@ -21,7 +21,7 @@ exports.get_posts = async (req, res, next) => {
       date: -1,
     });
     const people = await getpeople(req.user.facebookId);
-    console.log(response);
+
     res.render('index', { posts: response, people, user: req.user });
   } else {
     res.redirect('/signin');
@@ -93,15 +93,13 @@ exports.dislikePost = async (req, res, next) => {
 exports.postComment = async (req, res, next) => {
   if (req.isAuthenticated()) {
     try {
-      console.log(req.params.id);
       const comment = { name: req.user.name, comment: req.body.comment };
       const response1 = await Post.findByIdAndUpdate(req.params.id, {
         $push: { comments: comment },
       });
-      console.log(response1);
+
       return res.redirect(`/post/${req.params.id}`);
     } catch (err) {
-      console.log(err);
       return res.redirect(`/post/${req.params.id}`);
     }
   } else {
