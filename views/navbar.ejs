@@ -1,30 +1,29 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light header">
-    <h1><a href="/">ODINBOOK</Link></h1>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown" style="float:right;">
-        <ul class="navbar-nav">
+  <h1><a href="/">ODINBOOK</Link></h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown" style="float:right;">
+    <ul class="navbar-nav">
 
-        <li class="nav-item">
-            <a href="/createPost"><i class="fas fa-plus-circle" ></i></a>
-        </li>
-        <li class="nav-item">
-            <a href="/friendRequests"><i class="fas fa-user-plus" ></i></a> <span class="text-dark">
-                <% if(user.friendRequests.length > 0){ %> 
-                    (<%= user.friendRequests.length %>) </span>
-                    <% } %> 
-        </li>
-        <li class="nav-item">
-            <a href="/friends"><i class="fas fa-user-friends" ></i></a>
-        </li>
-        <li class="nav-item">
-            <a href="/profile"><i class="fas fa-user-circle" ></i></a>
-        </li>
-        <li class="nav-item">
-            <a href="/signout"><i class="fas fa-sign-out-alt" ></i></a>
-        </li>
-        </ul>
-    </div>
+      <li class="nav-item">
+        <a href="/createPost"><i class="fas fa-plus-circle" ></i></a>
+      </li>
+      <li class="nav-item">
+        <a href="/friendRequests"><i class="fas fa-user-plus" ></i></a> <span class="text-dark">
+          <% if(user.friendRequests.length > 0){ %> 
+            (<%= user.friendRequests.length %>) 
+          <% } %> </span>
+      </li>
+      <li class="nav-item">
+        <a href="/friends"><i class="fas fa-user-friends" ></i></a>
+      </li>
+      <li class="nav-item">
+        <a href="/profile"><i class="fas fa-user-circle" ></i></a>
+      </li>
+      <li class="nav-item">
+        <a href="/signout"><i class="fas fa-sign-out-alt" ></i></a>
+      </li>
+    </ul>
+  </div>
 </nav>
