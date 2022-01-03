@@ -7,11 +7,7 @@ async function sendrequest(id) {
     body: JSON.stringify({ facebookId: id }),
   });
   const result = await response.json();
-  if (result.move) {
-    window.location.href = '/';
-  } else {
-    window.location.href = '/';
-  }
+  window.location.reload();
 }
 
 async function confirmRequest(id) {
@@ -39,11 +35,8 @@ async function cancelRequest(id) {
     body: JSON.stringify({ facebookId: id }),
   });
   const result = await response.json();
-  if (result.move) {
-    window.location.href = '/friendRequests';
-  } else {
-    window.location.href = '/friendRequests';
-  }
+
+  window.location.href = '/friendRequests';
 }
 
 async function unfriendUser(id) {
@@ -55,11 +48,8 @@ async function unfriendUser(id) {
     body: JSON.stringify({ facebookId: id }),
   });
   const result = await response.json();
-  if (result.move) {
-    window.location.href = '/friends';
-  } else {
-    window.location.href = '/';
-  }
+
+  window.location.href = '/friends';
 }
 
 async function likePost(id) {
@@ -70,12 +60,13 @@ async function likePost(id) {
     },
     body: JSON.stringify({ id }),
   });
-  const result = response.json();
+  /* const result = response.json();
   if (result.move) {
     window.location.href = '/profile';
   } else {
     window.location.href = '/profile';
-  }
+  } */
+  window.location.reload();
 }
 
 async function dislikePost(id) {
@@ -86,10 +77,11 @@ async function dislikePost(id) {
     },
     body: JSON.stringify({ id }),
   });
-  const result = response.json();
+  /* const result = response.json();
   if (result.move) {
     window.location.href = '/profile';
   } else {
     window.location.href = '/profile';
-  }
+  } */
+  window.location.reload();
 }
